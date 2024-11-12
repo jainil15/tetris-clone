@@ -1,5 +1,5 @@
 import { Block } from "./block";
-import { ROWS } from "./constant";
+import { COLUMNS, ROWS } from "./constant";
 import { Grid } from "./grid";
 import { direction, LShape, type Shape } from "./shape";
 import { Vector } from "./vector";
@@ -13,8 +13,7 @@ export class Game {
 	constructor(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;
 		this.blocks = [];
-		const newShape = new LShape(new Vector(4, 0), this.grid.cellSize);
-		this.shape = newShape;
+		this.shape = null;
 		this.handleClick();
 		this.handleMove();
 	}
@@ -28,12 +27,26 @@ export class Game {
 	spawnShape(): void {
 		this.shape = new LShape(new Vector(5, 0), this.grid.cellSize);
 	}
-	update(): void {
+	fallDown(): void {
 		if (this.shape) {
 			this.shape.pos = this.shape.pos.add(new Vector(0, 1));
 			this.shape.update();
+		} else {
+			this.spawnShape();
+		}
+	}
+	update(): void {
+		if (this.gameOver) {
+			console.log("Game OVER");
+			return;
+		}
+		if (this.shape) {
 			this.handleHitBlocks();
 			this.handleBottom();
+		}
+		if (this.shape) {
+			this.shape.pos = this.shape.pos.add(new Vector(0, 1));
+			this.shape.update();
 		} else {
 			this.spawnShape();
 		}
@@ -44,16 +57,55 @@ export class Game {
 				case "ArrowLeft":
 				case "a":
 					if (this.shape) {
+						if (this.blocks.length != 0) {
+							for (const block of this.blocks) {
+								for (const shapeBlock of this.shape.blocks) {
+									if (
+										shapeBlock.pos.Eq(block.pos.add(new Vector(-1, 0))) ||
+										shapeBlock.pos.Eq(block.pos.add(new Vector(1, 0))) ||
+										shapeBlock.pos.x <= 0
+									) {
+										return;
+									}
+								}
+							}
+						} else {
+							for (const shapeBlock of this.shape.blocks) {
+								if (shapeBlock.pos.x <= 0) {
+									return;
+								}
+							}
+						}
+
 						this.shape.move(direction.LEFT);
 					}
 					break;
 				case "ArrowRight":
 				case "d":
 					if (this.shape) {
+						if (this.blocks.length != 0) {
+							for (const block of this.blocks) {
+								for (const shapeBlock of this.shape.blocks) {
+									if (
+										shapeBlock.pos.Eq(block.pos.add(new Vector(-1, 0))) ||
+										shapeBlock.pos.Eq(block.pos.add(new Vector(1, 0))) ||
+										shapeBlock.pos.x >= COLUMNS - 1
+									) {
+										return;
+									}
+								}
+							}
+						} else {
+							for (const shapeBlock of this.shape.blocks) {
+								if (shapeBlock.pos.x >= COLUMNS - 1) {
+									return;
+								}
+							}
+						}
+
 						this.shape.move(direction.RIGHT);
 					}
 					break;
-
 				default:
 					break;
 			}
@@ -62,6 +114,13 @@ export class Game {
 	handleClick() {
 		window.addEventListener("click", () => {
 			if (this.shape) {
+				if (this.blocks.length != 0) {
+					for (const block of this.blocks) {
+						for (const shapeBlock of this.shape.blocks) {
+							// TODO: On Rotate check that it doesn't collide
+						}
+					}
+				}
 				this.shape.rotate();
 				this.handleBottom();
 			}
@@ -69,7 +128,6 @@ export class Game {
 	}
 	handleBottom(): void {
 		if (this.shape) {
-			console.log("Shape pos", this.shape.pos);
 			for (const block of this.shape.blocks) {
 				if (block.pos.y >= ROWS - 1) {
 					this.blocks.push(...this.shape.blocks);
@@ -84,9 +142,12 @@ export class Game {
 			if (this.shape) {
 				for (const shapeBlock of this.shape.blocks) {
 					if (shapeBlock.pos.Eq(block.pos.add(new Vector(0, -1)))) {
+						if (shapeBlock.pos.y <= 0) {
+							console.log("Game Over");
+							this.gameOver = true;
+						}
 						this.blocks.push(...this.shape.blocks);
 						this.shape = null;
-						console.log("Hit");
 						break;
 					}
 				}
