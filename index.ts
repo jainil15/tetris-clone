@@ -9,7 +9,7 @@ function animate(ctx: CanvasRenderingContext2D, game: Game): void {
 	window.setTimeout(() => {
 		game.draw();
 		animate(ctx, game);
-	}, 400);
+	}, 1000);
 }
 window.onload = function () {
 	const canvas = document.getElementById("game") as HTMLCanvasElement | null;
