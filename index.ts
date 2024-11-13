@@ -1,7 +1,6 @@
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH } from "./src/constant";
 import { Game } from "./src/game";
 
-// const ROWS = 10;
 function animate(ctx: CanvasRenderingContext2D, game: Game): void {
 	ctx.clearRect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	game.update();

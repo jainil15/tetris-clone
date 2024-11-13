@@ -48,6 +48,7 @@ export class Game {
 			this.shape.pos = this.shape.pos.add(new Vector(0, 1));
 			this.shape.update();
 		} else {
+			this.clearRow();
 			this.spawnShape();
 		}
 	}
@@ -114,14 +115,10 @@ export class Game {
 	handleClick() {
 		window.addEventListener("click", () => {
 			if (this.shape) {
-				if (this.blocks.length != 0) {
-					for (const block of this.blocks) {
-						for (const shapeBlock of this.shape.blocks) {
-							// TODO: On Rotate check that it doesn't collide
-						}
-					}
+				if (this.shape.validRotation(this.blocks)) {
+					this.shape.rotate();
 				}
-				this.shape.rotate();
+				// this.shape.rotate();
 				this.handleBottom();
 			}
 		});
@@ -152,6 +149,38 @@ export class Game {
 					}
 				}
 			}
+		}
+	}
+	clearRow(): void {
+		const clearRows: number[] = [];
+		for (let row = 0; row < ROWS; row++) {
+			let cont = true;
+			for (let col = 0; col < COLUMNS; col++) {
+				let empty = true;
+				for (const block of this.blocks) {
+					if (block.pos.Eq(new Vector(col, row))) {
+						empty = false;
+						break;
+					}
+				}
+				if (empty) {
+					cont = false;
+					break;
+				}
+			}
+			if (cont) {
+				clearRows.push(row);
+			}
+		}
+		console.log("Rows to clear", clearRows);
+		for (const row of clearRows) {
+			console.log(this.blocks);
+			this.blocks = this.blocks.filter((block) => block.pos.y !== row);
+			this.blocks.map((block) => {
+				if (block.pos.y <= row) {
+					block.pos.y++;
+				}
+			});
 		}
 	}
 }
