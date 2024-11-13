@@ -6,6 +6,14 @@ export enum direction {
 	LEFT,
 	RIGHT,
 }
+export enum shapes {
+	Z = 0,
+	T = 1,
+	L = 2,
+	Line = 3,
+	Square = 4,
+}
+
 export interface IShape {
 	create(rotation: number, pos: Vector, cellSize: number): Block[];
 }
@@ -252,4 +260,17 @@ export class LineShape implements IShape {
 		}
 	}
 }
-export function shapeBuilder(shape: shapes) {}
+export function shapeBuilder(shape: shapes): IShape {
+	switch (shape) {
+		case shapes.L:
+			return new LShape();
+		case shapes.Z:
+			return new ZShape();
+		case shapes.T:
+			return new TShape();
+		case shapes.Line:
+			return new LineShape();
+		case shapes.Square:
+			return new SquareShape();
+	}
+}

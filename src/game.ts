@@ -1,14 +1,7 @@
 import { Block } from "./block";
 import { COLUMNS, ROWS } from "./constant";
 import { Grid } from "./grid";
-import {
-	direction,
-	LineShape,
-	Shape,
-	SquareShape,
-	TShape,
-	ZShape,
-} from "./shape";
+import { direction, Shape, shapeBuilder } from "./shape";
 import { Vector } from "./vector";
 
 export class Game {
@@ -32,11 +25,9 @@ export class Game {
 		if (this.shape) this.shape.draw(this.ctx);
 	}
 	spawnShape(): void {
-		this.shape = new Shape(
-			new Vector(5, 0),
-			this.grid.cellSize,
-			new LineShape(),
-		);
+		const randomNum = Math.floor(Math.random() * 5);
+		const s = shapeBuilder(randomNum);
+		this.shape = new Shape(new Vector(5, 0), this.grid.cellSize, s);
 	}
 	fallDown(): void {
 		if (this.shape) {
