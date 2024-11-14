@@ -3,13 +3,12 @@ import { Game } from "./src/game";
 
 function animate(ctx: CanvasRenderingContext2D, game: Game): void {
 	ctx.clearRect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
-	game.update();
 	game.draw();
-
-	window.setTimeout(() => {
-		game.draw();
+	game.update();
+	setTimeout(() => {
+		// game.draw();
 		animate(ctx, game);
-	}, 1000);
+	}, 500);
 }
 window.onload = function () {
 	const canvas = document.getElementById("game") as HTMLCanvasElement | null;

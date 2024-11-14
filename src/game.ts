@@ -6,12 +6,15 @@ import { Vector } from "./vector";
 
 export class Game {
 	blocks: Block[];
+	score = 0;
 	shape: Shape | null;
 	ctx: CanvasRenderingContext2D;
 	grid = new Grid(500, 500);
 	gameOver = false;
+	scoreEl: HTMLElement | null;
 	constructor(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;
+		this.scoreEl = document.getElementById("score");
 		this.blocks = [];
 		this.shape = null;
 		this.handleClick();
@@ -174,7 +177,23 @@ export class Game {
 				clearRows.push(row);
 			}
 		}
-		console.log("Rows to clear", clearRows);
+		if (clearRows.length !== 0) {
+			switch (clearRows.length) {
+				case 1:
+					this.score += 40;
+					break;
+				case 2:
+					this.score += 100;
+					break;
+				case 3:
+					this.score += 300;
+					break;
+				case 4:
+					this.score += 400;
+					break;
+			}
+			this.updateScore();
+		}
 		for (const row of clearRows) {
 			console.log(this.blocks);
 			this.blocks = this.blocks.filter((block) => block.pos.y !== row);
@@ -183,6 +202,11 @@ export class Game {
 					block.pos.y++;
 				}
 			});
+		}
+	}
+	updateScore(): void {
+		if (this.scoreEl) {
+			this.scoreEl.innerHTML = this.score.toString();
 		}
 	}
 }

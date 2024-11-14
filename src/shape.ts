@@ -15,6 +15,7 @@ export enum shapes {
 }
 
 export interface IShape {
+	color: string;
 	create(rotation: number, pos: Vector, cellSize: number): Block[];
 }
 export class Shape {
@@ -101,161 +102,160 @@ export class Shape {
 	}
 }
 export class SquareShape implements IShape {
+	color = "#4B0082";
 	create(rotation: number, pos: Vector, cellSize: number): Block[] {
 		switch (rotation) {
 			default:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
-					new Block(pos.add(new Vector(1, 1)), cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
 				];
 		}
 	}
 }
 export class LShape implements IShape {
+	color = "#BA55D3";
 	create(rotation: number, pos: Vector, cellSize: number): Block[] {
 		switch (rotation) {
 			case 0:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
-					new Block(pos.add(new Vector(1, 1)), cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
 				];
 			case 1:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
-					new Block(pos.add(new Vector(1, 1)), cellSize),
-					new Block(pos.add(new Vector(-1, 0)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(-1, 0)), cellSize, this.color),
 				];
 			case 2:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
-					new Block(pos.add(new Vector(-1, -1)), cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
+					new Block(pos.add(new Vector(-1, -1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
 				];
 			case 3:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(-1, 0)), cellSize),
-					new Block(pos.add(new Vector(-1, -1)), cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(-1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(-1, -1)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
 				];
 			default:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
-					new Block(pos.add(new Vector(1, 1)), cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
 				];
 		}
 	}
 }
-/* This is t
-          new Block(pos, cellSize),
-          new Block(pos.add(new Vector(1, 0)), cellSize),
-          new Block(pos.add(new Vector(1, 1)), cellSize),
-          new Block(pos.add(new Vector(1, -1)), cellSize),
- * */
 export class ZShape implements IShape {
+	color = "#0000FF";
 	create(rotation: number, pos: Vector, cellSize: number): Block[] {
 		switch (rotation) {
 			case 0:
 			case 2:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
-					new Block(pos.add(new Vector(-1, 1)), cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(-1, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
 				];
 			case 1:
 			case 3:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
-					new Block(pos.add(new Vector(1, 1)), cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
 				];
 			default:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
-					new Block(pos.add(new Vector(1, 1)), cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
 				];
 		}
 	}
 }
 export class TShape implements IShape {
+	color = "#FFFF33";
 	create(rotation: number, pos: Vector, cellSize: number): Block[] {
 		switch (rotation) {
 			case 0:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
-					new Block(pos.add(new Vector(-1, 0)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(-1, 0)), cellSize, this.color),
 				];
 			case 1:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
 				];
 			case 2:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
-					new Block(pos.add(new Vector(-1, 0)), cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(-1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
 				];
 			case 3:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
-					new Block(pos.add(new Vector(-1, 0)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
+					new Block(pos.add(new Vector(-1, 0)), cellSize, this.color),
 				];
 			default:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
-					new Block(pos.add(new Vector(1, 1)), cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(1, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
 				];
 		}
 	}
 }
 
 export class LineShape implements IShape {
+	color = "#CC0000";
 	create(rotation: number, pos: Vector, cellSize: number): Block[] {
 		switch (rotation) {
 			case 0:
 			case 2:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(1, 0)), cellSize),
-					new Block(pos.add(new Vector(-1, 0)), cellSize),
-					new Block(pos.add(new Vector(-2, 0)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(-1, 0)), cellSize, this.color),
+					new Block(pos.add(new Vector(-2, 0)), cellSize, this.color),
 				];
 			case 1:
 			case 3:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
-					new Block(pos.add(new Vector(0, 2)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, 2)), cellSize, this.color),
 				];
 			default:
 				return [
-					new Block(pos, cellSize),
-					new Block(pos.add(new Vector(0, -1)), cellSize),
-					new Block(pos.add(new Vector(0, 1)), cellSize),
-					new Block(pos.add(new Vector(0, 2)), cellSize),
+					new Block(pos, cellSize, this.color),
+					new Block(pos.add(new Vector(0, -1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, 1)), cellSize, this.color),
+					new Block(pos.add(new Vector(0, 2)), cellSize, this.color),
 				];
 		}
 	}
